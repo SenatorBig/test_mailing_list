@@ -8,3 +8,4 @@
 7. redis-server
 8. python -m celery -A mailing worker
 
+Для создания рассылки необходимо добавить подписчиков(subscribers), и в Email создать и сохранить саму рассылку
