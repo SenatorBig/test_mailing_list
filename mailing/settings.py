@@ -130,9 +130,6 @@ EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PASSWORD")
 EMAIL_PORT = int(os.environ.get("MAIL_SMTP_PORT", 587))
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
-
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-
+CELERY_BROKER_URL = os.environ.get("CELERY_URL")
 
 BACKEND_HOST = os.environ.get("BACKEND_HOST")

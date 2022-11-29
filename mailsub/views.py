@@ -7,9 +7,7 @@ from mailsub.models import SentMail
 
 
 def image_load(request, email_uuid):
-    sent_mail = SentMail.objects.get(email_uuid=email_uuid)
-    sent_mail.is_read = True
-    sent_mail.save()
+    SentMail.objects.get(email_uuid=email_uuid).update(is_read=True)
     red = Image.new('RGB', (1, 1))
     response = HttpResponse(content_type="image/png")
     red.save(response, "PNG")

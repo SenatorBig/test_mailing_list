@@ -4,14 +4,14 @@ from django.conf import settings
 from django.urls import reverse
 from celery import shared_task
 
-from mailsub.models import Subscriber, SentMail
+from mailsub.models import SentMail
 
 
 @shared_task()
 def send_email_task(html_template, subject, subscribers_ids, email):
-    subscribers = Subscriber.objects.filter(id__in=subscribers_ids)
     sent_mail = SentMail.objects.filter(subscriber_id__in=subscribers_ids, mail_id=email)
-    for subscriber in subscribers:
+    for mail in sent_mail:
+        subscriber = mail.subscriber
         uid = sent_mail.get(subscriber=subscriber)
         common_context = {
             "first_name": subscriber.first_name,
@@ -19,7 +19,7 @@ def send_email_task(html_template, subject, subscribers_ids, email):
             "birthday": subscriber.birth_date,
             "link": settings.BACKEND_HOST + reverse('image_load', kwargs={"email_uuid": str(uid.email_uuid)})
         }
-        callback = '''<img src="{{link}}" height="1px" width="1px"/>'''
+        callback = '<img src="{{link}}" height="1px" width="1px"/>'
         source = html_template + callback
         template = Template(source)
 
