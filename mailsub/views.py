@@ -1,13 +1,17 @@
 from __future__ import unicode_literals
 
-from mailsub.forms import MailForm
-from django.shortcuts import render
+from django.http import HttpResponse
+from PIL import Image
+
+from mailsub.models import SentMail
 
 
-def create_mailing_list(request):
-    context = {}
-    form = MailForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-    context['form'] = form
-    return render(request, "base.html", context)
+def image_load(request, email_uuid):
+    sent_mail = SentMail.objects.get(email_uuid=email_uuid)
+    sent_mail.is_read = True
+    sent_mail.save()
+    red = Image.new('RGB', (1, 1))
+    response = HttpResponse(content_type="image/png")
+    red.save(response, "PNG")
+    return response
+

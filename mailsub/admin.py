@@ -13,7 +13,7 @@ class SubscriberAdmin(admin.ModelAdmin):
 
 @admin.register(Email)
 class MailAdmin(admin.ModelAdmin):
-    list_display = ('html_layout', 'subject')
+    list_display = ('subject', )
     form = MailForm
 
 
