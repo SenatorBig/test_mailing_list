@@ -8,4 +8,11 @@
 7. redis-server запуск redis
 8. python -m celery -A mailing worker запуск Celery
 
-Для создания рассылки необходимо добавить подписчиков(subscribers), и в Email создать и сохранить саму рассылку
+Для создания рассылки необходимо добавить подписчиков(subscribers), и в Email создать и сохранить саму рассылку.
+Создать .env файл и добавить туда следующие переменные:
+MAIL_SMTP_ADDRESS= SMTP адресс 
+MAIL_USER=пользователь полностью (example@example.com)
+MAIL_PASSWORD=пароль 
+MAIL_SMTP_PORT=порт
+BACKEND_HOST=хост на котором запускается приложение
+CELERY_URL=адрес redis сервера
